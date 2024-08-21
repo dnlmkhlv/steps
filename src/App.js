@@ -10,7 +10,18 @@ export default function App() {
   return (
     <div>
       <Steps />
-      <Steps />
+      <StepMessage step={1}>
+        <p>Pass in content</p>
+        <p>🚀</p>
+      </StepMessage>
+      <StepMessage step={2}>
+        <p>Read children prop</p>
+        <p>🚀</p>
+      </StepMessage>
+      <StepMessage step={3}>
+        <p>Relax and enjoy</p>
+        <p>🚀</p>
+      </StepMessage>
     </div>
   );
 }
@@ -23,7 +34,7 @@ function Steps() {
     if (step > 1) setStep((s) => s - 1);
   }
 
-  function handlNext() {
+  function handleNext() {
     if (step < 3) {
       setStep((s) => s + 1);
     }
@@ -42,26 +53,38 @@ function Steps() {
             <div className={step >= 3 ? "active" : ""}>3</div>
           </div>
 
-          <p className="message">
-            Step {step}: {messages[step - 1]}
-          </p>
+          <StepMessage step={step}>{messages[step - 1]}</StepMessage>
 
           <div className="buttons">
-            <button
-              style={{ backgroundColor: "#7950f2", color: "#fff" }}
-              onClick={handlePrevious}
-            >
-              Previous
-            </button>
-            <button
-              style={{ backgroundColor: "#7950f2", color: "#fff" }}
-              onClick={handlNext}
-            >
-              Next
-            </button>
+            <Button textColor="#fff" bgColor="#7950f2" onClick={handlePrevious}>
+              <span>👈</span>Previous
+            </Button>
+            <Button textColor="#fff" bgColor="#7950f2" onClick={handleNext}>
+              Next<span>👉</span>
+            </Button>
           </div>
         </div>
       )}
     </div>
+  );
+}
+
+function StepMessage({ step, children }) {
+  return (
+    <div className="message">
+      <h3>Step {step}</h3>
+      {children}
+    </div>
+  );
+}
+
+function Button({ textColor, bgColor, onClick, children }) {
+  return (
+    <button
+      style={{ backgroundColor: bgColor, color: textColor }}
+      onClick={onClick}
+    >
+      {children}
+    </button>
   );
 }
